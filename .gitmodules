@@ -1,0 +1,12 @@
+[submodule "atom.core"]
+	path = atom.core
+	url = https://github.com/shifu-dev/atom.core.git
+[submodule "atom.logging"]
+	path = atom.logging
+	url = https://github.com/shifu-dev/atom.logging.git
+[submodule "atom.engine"]
+	path = atom.engine
+	url = https://github.com/shifu-dev/atom.engine.git
+[submodule "atom.editor"]
+	path = atom.editor
+	url = https://github.com/shifu-dev/atom.editor.git
