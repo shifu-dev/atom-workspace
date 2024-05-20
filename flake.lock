@@ -1,0 +1,216 @@
+{
+  "nodes": {
+    "atom_core": {
+      "inputs": {
+        "cpptrace": "cpptrace",
+        "libdwarf-lite": "libdwarf-lite",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "zstd": "zstd"
+      },
+      "locked": {
+        "lastModified": 1716203144,
+        "narHash": "sha256-FAeHvmbLevm/j6EDn4hGh8L4yKCM0yBz08vi038PTV8=",
+        "ref": "refs/heads/main",
+        "rev": "83b64e9388cd9ac569e187bda39f61269b47722a",
+        "revCount": 728,
+        "type": "git",
+        "url": "file:atom.core"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:atom.core"
+      }
+    },
+    "atom_editor": {
+      "inputs": {
+        "atom_core": [
+          "atom_core"
+        ],
+        "atom_engine": [
+          "atom_engine"
+        ],
+        "atom_logging": [
+          "atom_logging"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1716206330,
+        "narHash": "sha256-a4Ul9piiXKEpVcm2msZXR+y/rvpuRBhKd3WCqOt7n7Y=",
+        "ref": "refs/heads/main",
+        "rev": "77a1b918ea2e07dcdd0650395806f3f44a3527fb",
+        "revCount": 6,
+        "type": "git",
+        "url": "file:atom.editor"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:atom.editor"
+      }
+    },
+    "atom_engine": {
+      "inputs": {
+        "atom_core": [
+          "atom_core"
+        ],
+        "atom_logging": [
+          "atom_logging"
+        ],
+        "imgui": "imgui",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs_glfw": "nixpkgs_glfw"
+      },
+      "locked": {
+        "dirtyRev": "733dbcc584e723f5c3dfb370953f7c6361d0c308-dirty",
+        "dirtyShortRev": "733dbcc-dirty",
+        "lastModified": 1716205868,
+        "narHash": "sha256-Hh8aZvx1BHZZFlYoc2FqGuTvrro1cCn210bhtbgkOVQ=",
+        "type": "git",
+        "url": "file:atom.engine"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:atom.engine"
+      }
+    },
+    "atom_logging": {
+      "inputs": {
+        "atom_core": [
+          "atom_core"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1716203498,
+        "narHash": "sha256-/DzBmIJ/VcQGfcf18pI0Ot9M4Zg5EcfkB1hsXoeGsyE=",
+        "ref": "refs/heads/main",
+        "rev": "9731bd59aace6ac92f08ced058941fce1eebee5d",
+        "revCount": 58,
+        "type": "git",
+        "url": "file:atom.logging"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:atom.logging"
+      }
+    },
+    "cpptrace": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1715568998,
+        "narHash": "sha256-A74SLDo9eGws0z9RmLwT+2al0qC3/5BnG+uDjFxeSAU=",
+        "owner": "jeremy-rifkin",
+        "repo": "cpptrace",
+        "rev": "a70cf7935adbc1522d2793dfc64a4ff0dfb19a9a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jeremy-rifkin",
+        "repo": "cpptrace",
+        "type": "github"
+      }
+    },
+    "imgui": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1715882224,
+        "narHash": "sha256-QZaHHg/cHPjI7P1Ggw2zfJNW1gnOA4zvmLv/cGjVk/M=",
+        "owner": "ocornut",
+        "repo": "imgui",
+        "rev": "b39fc84f8919b87c9d79f6ffaf43efb61d2beb3d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ocornut",
+        "ref": "docking",
+        "repo": "imgui",
+        "type": "github"
+      }
+    },
+    "libdwarf-lite": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1714245344,
+        "narHash": "sha256-jcdBQGukZIDEltlx306IWgKQ2IqbE29T8sa0zTSDrxw=",
+        "owner": "jeremy-rifkin",
+        "repo": "libdwarf-lite",
+        "rev": "87401f22cd05628d23059cb29ee6448a55c3a88a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jeremy-rifkin",
+        "ref": "v0.9.2",
+        "repo": "libdwarf-lite",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1716137900,
+        "narHash": "sha256-sowPU+tLQv8GlqtVtsXioTKeaQvlMz/pefcdwg8MvfM=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "6c0b7a92c30122196a761b440ac0d46d3d9954f1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_glfw": {
+      "locked": {
+        "lastModified": 1706220439,
+        "narHash": "sha256-JMPlh3WoVVOSFSGdetBDKKkKkLNwnTqewFn+g1v2n/A=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "7a339d87931bba829f68e94621536cad9132971a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "7a339d87931bba829f68e94621536cad9132971a",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "atom_core": "atom_core",
+        "atom_editor": "atom_editor",
+        "atom_engine": "atom_engine",
+        "atom_logging": "atom_logging",
+        "nixpkgs": "nixpkgs"
+      }
+    },
+    "zstd": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1680639232,
+        "narHash": "sha256-tHHHIsQU7vJySrVhJuMKUSq11MzkmC+Pcsj00uFJdnQ=",
+        "owner": "facebook",
+        "repo": "zstd",
+        "rev": "63779c798237346c2b245c546c40b72a5a5913fe",
+        "type": "github"
+      },
+      "original": {
+        "owner": "facebook",
+        "ref": "v1.5.5",
+        "repo": "zstd",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
