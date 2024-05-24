@@ -10,10 +10,11 @@
         "zstd": "zstd"
       },
       "locked": {
-        "dirtyRev": "80193ac401c202ed275a723ba612ece234057476-dirty",
-        "dirtyShortRev": "80193ac-dirty",
-        "lastModified": 1716411722,
+        "lastModified": 1716557198,
         "narHash": "sha256-5HeGI4ZFo6ARifwMNpa3NJ3E/07hVJ+icGX1sVn21oU=",
+        "ref": "refs/heads/main",
+        "rev": "f2702182574356cb89050dfcee9aa888f1bb19af",
+        "revCount": 733,
         "type": "git",
         "url": "file:atom.core"
       },
@@ -38,11 +39,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1716412977,
-        "narHash": "sha256-nGcEAwe+gUKZnmnRNtCxdXhBJ22B63ySayN2pUEpuFA=",
+        "lastModified": 1716560816,
+        "narHash": "sha256-U6710X5+YComq8Qb5ZoCVBx3Are+tRFe3ZyhtID/EHE=",
         "ref": "refs/heads/main",
-        "rev": "43f534c23fd47a95e900d8ede87685c88d5f1495",
-        "revCount": 9,
+        "rev": "7d1dad4bc0ba0b8714356d58015a94488d99e31d",
+        "revCount": 14,
         "type": "git",
         "url": "file:atom.editor"
       },
@@ -66,11 +67,11 @@
         "nixpkgs_glfw": "nixpkgs_glfw"
       },
       "locked": {
-        "lastModified": 1716554027,
-        "narHash": "sha256-Fc/ZkjI/O80Rn7GYVFQsUZBhJblpqQXw+c8yQWvNq4Q=",
+        "lastModified": 1716560775,
+        "narHash": "sha256-ZXvtGyuIp7gqXVyfutiTjLzO93vOqIXxT5lIi0PlmP8=",
         "ref": "refs/heads/main",
-        "rev": "1eee2d54963753c99e4e9432a826b9f23a5b79c9",
-        "revCount": 160,
+        "rev": "1176ccd3b83ad2068ac4e89100dc2672eef0840b",
+        "revCount": 162,
         "type": "git",
         "url": "file:atom.engine"
       },
@@ -89,11 +90,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1716412243,
-        "narHash": "sha256-vKvXOcRC8hdO/S2pcwVr3N2cLOkDL2gpbkWMSYcLCaE=",
+        "lastModified": 1716557273,
+        "narHash": "sha256-6sT3vWVQi4gbiTY5+8wGY9QVp9OfZ3KJzmhlPHNy+y8=",
         "ref": "refs/heads/main",
-        "rev": "f389827707525817752505c4c937459ea9426bf0",
-        "revCount": 61,
+        "rev": "a567a90cbc257c36ef786a0d7132ff24826bcba1",
+        "revCount": 62,
         "type": "git",
         "url": "file:atom.logging"
       },
