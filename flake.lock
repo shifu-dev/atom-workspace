@@ -10,11 +10,10 @@
         "zstd": "zstd"
       },
       "locked": {
+        "dirtyRev": "80193ac401c202ed275a723ba612ece234057476-dirty",
+        "dirtyShortRev": "80193ac-dirty",
         "lastModified": 1716411722,
-        "narHash": "sha256-RoBD88V23BOxFhaRHWcfdJhsXf48q5495ukxvSxueRw=",
-        "ref": "refs/heads/main",
-        "rev": "80193ac401c202ed275a723ba612ece234057476",
-        "revCount": 732,
+        "narHash": "sha256-5HeGI4ZFo6ARifwMNpa3NJ3E/07hVJ+icGX1sVn21oU=",
         "type": "git",
         "url": "file:atom.core"
       },
@@ -67,11 +66,11 @@
         "nixpkgs_glfw": "nixpkgs_glfw"
       },
       "locked": {
-        "lastModified": 1716412648,
-        "narHash": "sha256-OhD9WqOhhMMpVe1FfFk/AWeA+ovwDx0OuKcw24fUZqU=",
+        "lastModified": 1716554027,
+        "narHash": "sha256-Fc/ZkjI/O80Rn7GYVFQsUZBhJblpqQXw+c8yQWvNq4Q=",
         "ref": "refs/heads/main",
-        "rev": "ee2d7c596983050213f76495c4a07d46d7eb0c35",
-        "revCount": 153,
+        "rev": "1eee2d54963753c99e4e9432a826b9f23a5b79c9",
+        "revCount": 160,
         "type": "git",
         "url": "file:atom.engine"
       },
