@@ -5,25 +5,25 @@
         nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
         atom_core = {
-            url = "git+file:atom.core";
+            url = "./atom.core";
             inputs.nixpkgs.follows = "nixpkgs";
         };
 
         atom_logging = {
-            url = "git+file:atom.logging";
+            url = "./atom.logging";
             inputs.atom_core.follows = "atom_core";
             inputs.nixpkgs.follows = "nixpkgs";
         };
 
         atom_engine = {
-            url = "git+file:atom.engine";
+            url = "./atom.engine";
             inputs.atom_core.follows = "atom_core";
             inputs.atom_logging.follows = "atom_logging";
             inputs.nixpkgs.follows = "nixpkgs";
         };
 
         atom_editor = {
-            url = "git+file:atom.editor";
+            url = "./atom.editor";
             inputs.atom_core.follows = "atom_core";
             inputs.atom_logging.follows = "atom_logging";
             inputs.atom_engine.follows = "atom_engine";
