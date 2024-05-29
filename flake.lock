@@ -1,120 +1,18 @@
 {
   "nodes": {
-    "atom_core": {
-      "inputs": {
-        "cpptrace": "cpptrace",
-        "libdwarf-lite": "libdwarf-lite",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "zstd": "zstd"
-      },
-      "locked": {
-        "lastModified": 1716557198,
-        "narHash": "sha256-5HeGI4ZFo6ARifwMNpa3NJ3E/07hVJ+icGX1sVn21oU=",
-        "ref": "refs/heads/main",
-        "rev": "f2702182574356cb89050dfcee9aa888f1bb19af",
-        "revCount": 733,
-        "type": "git",
-        "url": "file:atom.core"
-      },
-      "original": {
-        "type": "git",
-        "url": "file:atom.core"
-      }
-    },
-    "atom_editor": {
-      "inputs": {
-        "atom_core": [
-          "atom_core"
-        ],
-        "atom_engine": [
-          "atom_engine"
-        ],
-        "atom_logging": [
-          "atom_logging"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1716560816,
-        "narHash": "sha256-U6710X5+YComq8Qb5ZoCVBx3Are+tRFe3ZyhtID/EHE=",
-        "ref": "refs/heads/main",
-        "rev": "7d1dad4bc0ba0b8714356d58015a94488d99e31d",
-        "revCount": 14,
-        "type": "git",
-        "url": "file:atom.editor"
-      },
-      "original": {
-        "type": "git",
-        "url": "file:atom.editor"
-      }
-    },
-    "atom_engine": {
-      "inputs": {
-        "atom_core": [
-          "atom_core"
-        ],
-        "atom_logging": [
-          "atom_logging"
-        ],
-        "imgui": "imgui",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "nixpkgs_glfw": "nixpkgs_glfw"
-      },
-      "locked": {
-        "lastModified": 1716560775,
-        "narHash": "sha256-ZXvtGyuIp7gqXVyfutiTjLzO93vOqIXxT5lIi0PlmP8=",
-        "ref": "refs/heads/main",
-        "rev": "1176ccd3b83ad2068ac4e89100dc2672eef0840b",
-        "revCount": 162,
-        "type": "git",
-        "url": "file:atom.engine"
-      },
-      "original": {
-        "type": "git",
-        "url": "file:atom.engine"
-      }
-    },
-    "atom_logging": {
-      "inputs": {
-        "atom_core": [
-          "atom_core"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1716557273,
-        "narHash": "sha256-6sT3vWVQi4gbiTY5+8wGY9QVp9OfZ3KJzmhlPHNy+y8=",
-        "ref": "refs/heads/main",
-        "rev": "a567a90cbc257c36ef786a0d7132ff24826bcba1",
-        "revCount": 62,
-        "type": "git",
-        "url": "file:atom.logging"
-      },
-      "original": {
-        "type": "git",
-        "url": "file:atom.logging"
-      }
-    },
     "cpptrace": {
       "flake": false,
       "locked": {
-        "lastModified": 1716352602,
-        "narHash": "sha256-DljRNYnf90qbFRhQPA8ZXrw7VipWLUlshr8Jmuq7mXg=",
+        "lastModified": 1714667454,
+        "narHash": "sha256-ZNYIXl+rM7uTBTj2S7jcuJNnVypwyH1lryDaWefREm4=",
         "owner": "jeremy-rifkin",
         "repo": "cpptrace",
-        "rev": "040d131cefa96c2c5f77f51be37e8b4481bc4b82",
+        "rev": "0db934caf79350e989c01c49fae5ad6ac809cc62",
         "type": "github"
       },
       "original": {
         "owner": "jeremy-rifkin",
+        "ref": "v0.5.4",
         "repo": "cpptrace",
         "type": "github"
       }
@@ -122,11 +20,11 @@
     "imgui": {
       "flake": false,
       "locked": {
-        "lastModified": 1716310866,
-        "narHash": "sha256-1NnCXgBOARLSCkOZ0T5kNTkzMdZAHsIGAQd0g53+dPo=",
+        "lastModified": 1716564238,
+        "narHash": "sha256-pzxGK94BKl7gBd9Ueh7wYSGnJNPrKU43/fuReRNqF0M=",
         "owner": "ocornut",
         "repo": "imgui",
-        "rev": "36ffdd69d304659388ad3d3be487a467de65eaf6",
+        "rev": "975beafafdcf8cdfa1b83261ce8c8cbeaa28091b",
         "type": "github"
       },
       "original": {
@@ -187,11 +85,12 @@
     },
     "root": {
       "inputs": {
-        "atom_core": "atom_core",
-        "atom_editor": "atom_editor",
-        "atom_engine": "atom_engine",
-        "atom_logging": "atom_logging",
-        "nixpkgs": "nixpkgs"
+        "cpptrace": "cpptrace",
+        "imgui": "imgui",
+        "libdwarf-lite": "libdwarf-lite",
+        "nixpkgs": "nixpkgs",
+        "nixpkgs_glfw": "nixpkgs_glfw",
+        "zstd": "zstd"
       }
     },
     "zstd": {
