@@ -80,6 +80,51 @@
             '';
         };
 
+
+        glslang_pkg = stdenv.mkDerivation rec {
+            pname = "glslang";
+            version = "14.2.0";
+
+            src = pkgs.fetchFromGitHub {
+                owner = "KhronosGroup";
+                repo = "glslang";
+                rev = version;
+                hash = "sha256-B6jVCeoFjd2H6+7tIses+Kj8DgHS6E2dkVzQAIzDHEc=";
+            };
+
+            # These get set at all-packages, keep onto them for child drvs
+            passthru = {
+                spirv-tools = pkgs.spirv-tools;
+                spirv-headers = pkgs.spirv-headers;
+            };
+
+            nativeBuildInputs = with pkgs; [
+                cmake
+                python3
+                bison
+                jq
+            ];
+
+            postPatch = ''
+                cp --no-preserve=mode -r "${pkgs.spirv-tools.src}" External/spirv-tools
+                ln -s "${pkgs.spirv-headers.src}" External/spirv-tools/external/spirv-headers
+            '';
+
+            # This is a dirty fix for lib/cmake/SPIRVTargets.cmake:51 which includes this directory
+            postInstall = ''
+                mkdir $out/include/External
+            '';
+
+            # Fix the paths in .pc, even though it's unclear if these .pc are really useful.
+            postFixup = ''
+                substituteInPlace $out/lib/pkgconfig/*.pc \
+                --replace '=''${prefix}//' '=/'
+
+                # add a symlink for backwards compatibility
+                ln -s $out/bin/glslang $out/bin/glslangValidator
+            '';
+        };
+
         clang_scan_deps_include_paths = [
             "/nix/store/csml9b5w7z51yc7hxgd2ax4m6vj36iyq-libcxx-18.1.5-dev/include"
             "/nix/store/2sf9x4kf8lihldhnhp2b8q3ybas3p83l-compiler-rt-libc-18.1.5-dev/include"
@@ -96,6 +141,7 @@
             "${pkgs.entt}/include"
             "${pkgs.box2d}/include"
             "${pkgs.stb}/include"
+            "${glslang_pkg}/include"
         ];
     in
     {
@@ -114,6 +160,7 @@
                 entt
                 stb
                 box2d
+                glslang_pkg
 
                 cmake
                 cmake-format
