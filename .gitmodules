@@ -10,3 +10,6 @@
 [submodule "atom.editor"]
 	path = atom.editor
 	url = https://github.com/shifu-dev/atom.editor.git
+[submodule "samples/super-mario"]
+	path = samples/super-mario
+	url = https://github.com/shifu-dev/atom.samples.super-mario.git
