@@ -80,7 +80,6 @@
         '';
       };
 
-
       glslang_pkg = stdenv.mkDerivation rec {
         pname = "glslang";
         version = "14.2.0";
@@ -125,6 +124,79 @@
         '';
       };
 
+      msdfgen_pkg = stdenv.mkDerivation rec {
+        pname = "msdfgen";
+        version = "v1.12";
+
+        src = pkgs.fetchFromGitHub {
+          owner = "Chlumsky";
+          repo = "msdfgen";
+          rev = version;
+          hash = "sha256-QLzfZP9Xsc5HBvF+riamqVY0pYN5umyEsiJV7W8JNyI=";
+        };
+
+        nativeBuildInputs = with pkgs; [
+          cmake
+          ninja
+        ];
+
+        propagatedBuildInputs = with pkgs; [
+          freetype
+          tinyxml-2
+          libpng
+        ];
+
+        configurePhase = ''
+          cmake \
+            -S . \
+            -B . \
+            -G Ninja \
+            -D CMAKE_INSTALL_PREFIX=$out \
+            -D MSDFGEN_USE_VCPKG=OFF \
+            -D MSDFGEN_USE_SKIA=OFF \
+            -D MSDFGEN_INSTALL=ON;
+        '';
+      };
+
+      msdf-atlas-gen_pkg = stdenv.mkDerivation rec {
+        pname = "msdf-atlas-gen";
+        version = "v1.3";
+
+        src = pkgs.fetchFromGitHub {
+          owner = "Chlumsky";
+          repo = "msdf-atlas-gen";
+          rev = version;
+          hash = "sha256-SfzQ008aoYI8tkrHXsXVQq9Qq+NIqT1zvSIHK1LTbLU=";
+          fetchSubmodules = true;
+          leaveDotGit = true;
+        };
+
+        nativeBuildInputs = with pkgs; [
+          cmake
+          ninja
+        ];
+
+        propagatedBuildInputs = with pkgs; [
+          msdfgen_pkg
+          freetype
+          tinyxml-2
+          libpng
+        ];
+
+        configurePhase = ''
+          cmake \
+            -S . \
+            -B . \
+            -G Ninja \
+            -D CMAKE_INSTALL_PREFIX=$out \
+            -D MSDF_ATLAS_MSDFGEN_EXTERNAL=ON \
+            -D MSDF_ATLAS_NO_ARTERY_FONT=ON \
+            -D MSDF_ATLAS_USE_VCPKG=OFF \
+            -D MSDF_ATLAS_USE_SKIA=OFF \
+            -D MSDF_ATLAS_INSTALL=ON;
+        '';
+      };
+
       clang_scan_deps_include_paths = [
         "/nix/store/csml9b5w7z51yc7hxgd2ax4m6vj36iyq-libcxx-18.1.5-dev/include"
         "/nix/store/2sf9x4kf8lihldhnhp2b8q3ybas3p83l-compiler-rt-libc-18.1.5-dev/include"
@@ -142,6 +214,8 @@
         "${pkgs.box2d}/include"
         "${pkgs.stb}/include"
         "${glslang_pkg}/include"
+        "${msdfgen_pkg}/include"
+        "${msdf-atlas-gen_pkg}/include"
       ];
     in
     {
@@ -161,6 +235,8 @@
           stb
           box2d
           glslang_pkg
+          msdfgen_pkg
+          msdf-atlas-gen_pkg
 
           cmake
           cmake-format
