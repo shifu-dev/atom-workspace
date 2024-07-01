@@ -33,24 +33,27 @@
       lib = pkgs.lib;
       stdenv = pkgs.llvmPackages_18.libcxxStdenv;
 
+      fmt_pkg = pkgs.fmt.override { stdenv = stdenv; };
+      catch2_pkg = pkgs.catch2_3.override { stdenv = stdenv; };
+      glslang_pkg = pkgs.glslang.override { stdenv = stdenv; };
       glfw_pkg = inputs.nixpkgs_glfw.legacyPackages.${system}.pkgs.glfw;
 
       cpptrace_pkg = stdenv.mkDerivation {
-
         name = "cpptrace";
-
         src = inputs.cpptrace;
 
         nativeBuildInputs = with pkgs; [
           cmake
           git
+          ninja
         ];
 
         configurePhase = ''
-          cmake -S . -B build \
-              -D FETCHCONTENT_FULLY_DISCONNECTED:BOOL="ON" \
-              -D FETCHCONTENT_SOURCE_DIR_LIBDWARF:PATH="${inputs.libdwarf-lite}" \
-              -D FETCHCONTENT_SOURCE_DIR_ZSTD:PATH="${inputs.zstd}";
+          cmake -S . -B build -G Ninja \
+            -D CMAKE_INSTALL_PREFIX=$out \
+            -D FETCHCONTENT_FULLY_DISCONNECTED:BOOL="ON" \
+            -D FETCHCONTENT_SOURCE_DIR_LIBDWARF:PATH="${inputs.libdwarf-lite}" \
+            -D FETCHCONTENT_SOURCE_DIR_ZSTD:PATH="${inputs.zstd}";
         '';
 
         buildPhase = ''
@@ -65,9 +68,7 @@
       imgui_pkg = stdenv.mkDerivation rec {
         pname = "imgui";
         version = "docking";
-
         src = inputs.imgui;
-
         dontBuild = true;
 
         installPhase = ''
@@ -77,50 +78,6 @@
           cp *.cpp $out/include/imgui
           cp -a backends $out/include/imgui/
           cp -a misc $out/include/imgui/
-        '';
-      };
-
-      glslang_pkg = stdenv.mkDerivation rec {
-        pname = "glslang";
-        version = "14.2.0";
-
-        src = pkgs.fetchFromGitHub {
-          owner = "KhronosGroup";
-          repo = "glslang";
-          rev = version;
-          hash = "sha256-B6jVCeoFjd2H6+7tIses+Kj8DgHS6E2dkVzQAIzDHEc=";
-        };
-
-        # These get set at all-packages, keep onto them for child drvs
-        passthru = {
-          spirv-tools = pkgs.spirv-tools;
-          spirv-headers = pkgs.spirv-headers;
-        };
-
-        nativeBuildInputs = with pkgs; [
-          cmake
-          python3
-          bison
-          jq
-        ];
-
-        postPatch = ''
-          cp --no-preserve=mode -r "${pkgs.spirv-tools.src}" External/spirv-tools
-          ln -s "${pkgs.spirv-headers.src}" External/spirv-tools/external/spirv-headers
-        '';
-
-        # This is a dirty fix for lib/cmake/SPIRVTargets.cmake:51 which includes this directory
-        postInstall = ''
-          mkdir $out/include/External
-        '';
-
-        # Fix the paths in .pc, even though it's unclear if these .pc are really useful.
-        postFixup = ''
-          substituteInPlace $out/lib/pkgconfig/*.pc \
-          --replace '=''${prefix}//' '=/'
-
-          # add a symlink for backwards compatibility
-          ln -s $out/bin/glslang $out/bin/glslangValidator
         '';
       };
 
@@ -147,10 +104,7 @@
         ];
 
         configurePhase = ''
-          cmake \
-            -S . \
-            -B . \
-            -G Ninja \
+          cmake -S . -B . -G Ninja \
             -D CMAKE_INSTALL_PREFIX=$out \
             -D MSDFGEN_USE_VCPKG=OFF \
             -D MSDFGEN_USE_SKIA=OFF \
@@ -166,7 +120,7 @@
           owner = "Chlumsky";
           repo = "msdf-atlas-gen";
           rev = version;
-          hash = "sha256-SfzQ008aoYI8tkrHXsXVQq9Qq+NIqT1zvSIHK1LTbLU=";
+          hash = "sha256-ji3L7urLdqAPkO1ZRYFWiAsQ8q8igKu74oTe18OtYz4=";
           fetchSubmodules = true;
           leaveDotGit = true;
         };
@@ -200,22 +154,26 @@
       clang_scan_deps_include_paths = [
         "/nix/store/csml9b5w7z51yc7hxgd2ax4m6vj36iyq-libcxx-18.1.5-dev/include"
         "/nix/store/2sf9x4kf8lihldhnhp2b8q3ybas3p83l-compiler-rt-libc-18.1.5-dev/include"
-        "/nix/store/hrssqr2jypca2qcqyy1xmfdw71nv6n14-catch2-3.5.2/include"
-        "/nix/store/zc8xnz48ca61zjplxc3zz1ha3zss046p-fmt-10.2.1-dev/include"
-        "/nix/store/2j35qpxbprdgcixyg70lyy6m0yay9352-magic-enum-0.9.5/include"
         "/nix/store/k3701zl6gmx3la7y4dnflcvf3xfy88kh-python3-3.11.9/include"
         "/nix/store/csml9b5w7z51yc7hxgd2ax4m6vj36iyq-libcxx-18.1.5-dev/include/c++/v1"
         "/nix/store/fymdqlxx6zsqvlmfwls3h2fly9kz0vcf-clang-wrapper-18.1.5/resource-root/include"
         "/nix/store/s3pvsv4as7mc8i2nwnk2hnsyi2qdj4bq-glibc-2.39-31-dev/include"
 
-        "${glfw_pkg}/include"
-        "${pkgs.glm}/include"
-        "${pkgs.entt}/include"
-        "${pkgs.box2d}/include"
-        "${pkgs.stb}/include"
+        # "${fmt_pkg}/include"
+        "/nix/store/83ky6ybp7lw8dqn3s47r2iqrby508l60-fmt-10.2.1-dev/include"
+        "${catch2_pkg}/include"
+        "${imgui_pkg}/include"
         "${glslang_pkg}/include"
+        "${glfw_pkg}/include"
+        "${cpptrace_pkg}/include"
         "${msdfgen_pkg}/include"
         "${msdf-atlas-gen_pkg}/include"
+
+        "${pkgs.magic-enum}/include"
+        "${pkgs.glm}/include"
+        "${pkgs.entt}/include"
+        "${pkgs.stb}/include"
+        "${pkgs.box2d}/include"
       ];
     in
     {
@@ -224,19 +182,20 @@
         name = "atom-workspace";
 
         nativeBuildInputs = with pkgs; [
-          fmt
-          magic-enum
-          cpptrace_pkg
-          glfw_pkg
+          fmt_pkg
+          catch2_pkg
           imgui_pkg
-          catch2_3
+          glslang_pkg
+          glfw_pkg
+          cpptrace_pkg
+          msdfgen_pkg
+          msdf-atlas-gen_pkg
+
+          magic-enum
           glm
           entt
           stb
           box2d
-          glslang_pkg
-          msdfgen_pkg
-          msdf-atlas-gen_pkg
 
           cmake
           cmake-format
