@@ -13,3 +13,6 @@
 [submodule "samples/super_mario"]
 	path = samples/super_mario
 	url = https://github.com/shifu-dev/atom_super_mario.git
+[submodule "atom_doc"]
+	path = atom_doc
+	url = https://github.com/shifu-dev/atom_doc.git
