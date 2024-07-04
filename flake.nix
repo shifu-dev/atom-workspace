@@ -1,9 +1,17 @@
 {
-  description = "atom-workspace";
+  description = "atom_workspace";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs_glfw.url = "github:nixos/nixpkgs/7a339d87931bba829f68e94621536cad9132971a";
+
+    nixpkgs_glfw = {
+      url = "github:nixos/nixpkgs/7a339d87931bba829f68e94621536cad9132971a";
+    };
+
+    fmt = {
+        url = "github:fmtlib/fmt";
+        flake = false;
+    };
 
     cpptrace = {
       url = "github:jeremy-rifkin/cpptrace/v0.5.4";
@@ -24,6 +32,16 @@
       url = "github:ocornut/imgui/docking";
       flake = false;
     };
+
+    msdfgen = {
+      url = "github:Chlumsky/msdfgen";
+      flake = false;
+    };
+
+    msdf_atlas_gen = {
+      url = "github:Chlumsky/msdf-atlas-gen";
+      flake = false;
+    };
   };
 
   outputs = inputs:
@@ -33,10 +51,26 @@
       lib = pkgs.lib;
       stdenv = pkgs.llvmPackages_18.libcxxStdenv;
 
-      fmt_pkg = pkgs.fmt.override { stdenv = stdenv; };
       catch2_pkg = pkgs.catch2_3.override { stdenv = stdenv; };
       glslang_pkg = pkgs.glslang.override { stdenv = stdenv; };
       glfw_pkg = inputs.nixpkgs_glfw.legacyPackages.${system}.pkgs.glfw;
+
+      fmt_pkg = stdenv.mkDerivation {
+          name = "fmt";
+          src = inputs.fmt;
+
+          nativeBuildInputs = with pkgs; [
+              cmake
+              ninja
+          ];
+
+          configurePhase = ''
+              cmake -S . -B . -G Ninja \
+                  -D FMT_DOC=OFF \
+                  -D FMT_TEST=OFF \
+                  -D CMAKE_INSTALL_PREFIX=$out;
+          '';
+      };
 
       cpptrace_pkg = stdenv.mkDerivation {
         name = "cpptrace";
@@ -65,32 +99,17 @@
         '';
       };
 
-      imgui_pkg = stdenv.mkDerivation rec {
-        pname = "imgui";
-        version = "docking";
+      imgui_pkg = (pkgs.imgui.override {
+        glfw = glfw_pkg;
+        IMGUI_BUILD_GLFW_BINDING = true;
+        IMGUI_BUILD_OPENGL3_BINDING = true;
+      }).overrideAttrs (old: {
         src = inputs.imgui;
-        dontBuild = true;
-
-        installPhase = ''
-          mkdir -p $out/include/imgui
-
-          cp *.h $out/include/imgui
-          cp *.cpp $out/include/imgui
-          cp -a backends $out/include/imgui/
-          cp -a misc $out/include/imgui/
-        '';
-      };
+      });
 
       msdfgen_pkg = stdenv.mkDerivation rec {
-        pname = "msdfgen";
-        version = "v1.12";
-
-        src = pkgs.fetchFromGitHub {
-          owner = "Chlumsky";
-          repo = "msdfgen";
-          rev = version;
-          hash = "sha256-QLzfZP9Xsc5HBvF+riamqVY0pYN5umyEsiJV7W8JNyI=";
-        };
+        name = "msdfgen";
+        src = inputs.msdfgen;
 
         nativeBuildInputs = with pkgs; [
           cmake
@@ -112,18 +131,9 @@
         '';
       };
 
-      msdf-atlas-gen_pkg = stdenv.mkDerivation rec {
-        pname = "msdf-atlas-gen";
-        version = "v1.3";
-
-        src = pkgs.fetchFromGitHub {
-          owner = "Chlumsky";
-          repo = "msdf-atlas-gen";
-          rev = version;
-          hash = "sha256-ji3L7urLdqAPkO1ZRYFWiAsQ8q8igKu74oTe18OtYz4=";
-          fetchSubmodules = true;
-          leaveDotGit = true;
-        };
+      msdf_atlas_gen_pkg = stdenv.mkDerivation rec {
+        name = "msdf-atlas-gen";
+        src = inputs.msdf_atlas_gen;
 
         nativeBuildInputs = with pkgs; [
           cmake
@@ -138,10 +148,7 @@
         ];
 
         configurePhase = ''
-          cmake \
-            -S . \
-            -B . \
-            -G Ninja \
+          cmake -S . -B . -G Ninja \
             -D CMAKE_INSTALL_PREFIX=$out \
             -D MSDF_ATLAS_MSDFGEN_EXTERNAL=ON \
             -D MSDF_ATLAS_NO_ARTERY_FONT=ON \
@@ -152,22 +159,21 @@
       };
 
       clang_scan_deps_include_paths = [
-        "/nix/store/csml9b5w7z51yc7hxgd2ax4m6vj36iyq-libcxx-18.1.5-dev/include"
-        "/nix/store/2sf9x4kf8lihldhnhp2b8q3ybas3p83l-compiler-rt-libc-18.1.5-dev/include"
-        "/nix/store/k3701zl6gmx3la7y4dnflcvf3xfy88kh-python3-3.11.9/include"
-        "/nix/store/csml9b5w7z51yc7hxgd2ax4m6vj36iyq-libcxx-18.1.5-dev/include/c++/v1"
-        "/nix/store/fymdqlxx6zsqvlmfwls3h2fly9kz0vcf-clang-wrapper-18.1.5/resource-root/include"
-        "/nix/store/s3pvsv4as7mc8i2nwnk2hnsyi2qdj4bq-glibc-2.39-31-dev/include"
+        "/nix/store/2ykf9vnwl6s3nvisgd9vpzm74wxabysd-clang-18.1.7-lib/lib/clang/18/include"
+        "/nix/store/fsb7lmhyy01flrnviwjfz3fgm53w990v-libcxx-18.1.7-dev/include/c++/v1"
+        "/nix/store/fsb7lmhyy01flrnviwjfz3fgm53w990v-libcxx-18.1.7-dev/include"
+        "/nix/store/il0vjm4nf1yv4swn0pi5rimh64hf3jrz-compiler-rt-libc-18.1.7-dev/include"
+        "/nix/store/ip5wiylb41wli3yy33sqibqcj6l1yawl-clang-wrapper-18.1.7/resource-root/include"
+        "/nix/store/4vgk1rlzdqjnpjicb5qcxjcd4spi7wyw-glibc-2.39-52-dev/include"
 
-        # "${fmt_pkg}/include"
-        "/nix/store/83ky6ybp7lw8dqn3s47r2iqrby508l60-fmt-10.2.1-dev/include"
+        "${fmt_pkg}/include"
         "${catch2_pkg}/include"
         "${imgui_pkg}/include"
         "${glslang_pkg}/include"
         "${glfw_pkg}/include"
         "${cpptrace_pkg}/include"
         "${msdfgen_pkg}/include"
-        "${msdf-atlas-gen_pkg}/include"
+        "${msdf_atlas_gen_pkg}/include"
 
         "${pkgs.magic-enum}/include"
         "${pkgs.glm}/include"
@@ -178,8 +184,7 @@
     in
     {
       devShells.${system}.default = stdenv.mkDerivation rec {
-
-        name = "atom-workspace";
+        name = "atom_workspace";
 
         nativeBuildInputs = with pkgs; [
           fmt_pkg
@@ -189,7 +194,7 @@
           glfw_pkg
           cpptrace_pkg
           msdfgen_pkg
-          msdf-atlas-gen_pkg
+          msdf_atlas_gen_pkg
 
           magic-enum
           glm
@@ -200,16 +205,18 @@
           cmake
           cmake-format
           ninja
+          doxygen
+          graphviz
           git
         ];
-
-        imgui_DIR = "${imgui_pkg}/include/imgui";
-        stb_include_dir = "${pkgs.stb}/include";
 
         CXXFLAGS = lib.strings.concatMapStrings (v: " -I " + v) clang_scan_deps_include_paths;
         CMAKE_GENERATOR = "Ninja";
         CMAKE_BUILD_TYPE = "Debug";
         CMAKE_EXPORT_COMPILE_COMMANDS = "true";
+        ATOM_DOC_DOXYFILE_DIR = ./atom_doc;
+
+        stb_include_dir = "${pkgs.stb}/include";
       };
     };
 }

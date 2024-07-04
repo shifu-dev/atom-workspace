@@ -17,14 +17,30 @@
         "type": "github"
       }
     },
+    "fmt": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1719870232,
+        "narHash": "sha256-2+p8Ye1Tr3prLrPeZJEkJBTr2b0JiIQ304aidXKncYU=",
+        "owner": "fmtlib",
+        "repo": "fmt",
+        "rev": "c4f6fa71357b223b0ab8ac29577c6228fde8853d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fmtlib",
+        "repo": "fmt",
+        "type": "github"
+      }
+    },
     "imgui": {
       "flake": false,
       "locked": {
-        "lastModified": 1716564238,
-        "narHash": "sha256-pzxGK94BKl7gBd9Ueh7wYSGnJNPrKU43/fuReRNqF0M=",
+        "lastModified": 1719939936,
+        "narHash": "sha256-ULg+UpR7kldeAsKVP6MflFlUoLr3uDDzSc/vr8w3UNU=",
         "owner": "ocornut",
         "repo": "imgui",
-        "rev": "975beafafdcf8cdfa1b83261ce8c8cbeaa28091b",
+        "rev": "527b2c45af2f8964f95826bd16ab7c7ed372ae41",
         "type": "github"
       },
       "original": {
@@ -51,13 +67,45 @@
         "type": "github"
       }
     },
+    "msdf_atlas_gen": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1717276379,
+        "narHash": "sha256-SfzQ008aoYI8tkrHXsXVQq9Qq+NIqT1zvSIHK1LTbLU=",
+        "owner": "Chlumsky",
+        "repo": "msdf-atlas-gen",
+        "rev": "c27de5988d7ecfbc9936ee5f936429e2dbc077b9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Chlumsky",
+        "repo": "msdf-atlas-gen",
+        "type": "github"
+      }
+    },
+    "msdfgen": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1717320655,
+        "narHash": "sha256-0xXI0NaTELOPFGoITF78vpHgSWxanU9dQhV4/Bv31M8=",
+        "owner": "Chlumsky",
+        "repo": "msdfgen",
+        "rev": "755c45b4445baa12bfead90fa7d4d2259f2a14c4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Chlumsky",
+        "repo": "msdfgen",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1716293225,
-        "narHash": "sha256-pU9ViBVE3XYb70xZx+jK6SEVphvt7xMTbm6yDIF4xPs=",
+        "lastModified": 1719848872,
+        "narHash": "sha256-H3+EC5cYuq+gQW8y0lSrrDZfH71LB4DAf+TDFyvwCNA=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "3eaeaeb6b1e08a016380c279f8846e0bd8808916",
+        "rev": "00d80d13810dbfea8ab4ed1009b09100cca86ba8",
         "type": "github"
       },
       "original": {
@@ -86,8 +134,11 @@
     "root": {
       "inputs": {
         "cpptrace": "cpptrace",
+        "fmt": "fmt",
         "imgui": "imgui",
         "libdwarf-lite": "libdwarf-lite",
+        "msdf_atlas_gen": "msdf_atlas_gen",
+        "msdfgen": "msdfgen",
         "nixpkgs": "nixpkgs",
         "nixpkgs_glfw": "nixpkgs_glfw",
         "zstd": "zstd"
